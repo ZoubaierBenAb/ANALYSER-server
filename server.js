@@ -42,7 +42,7 @@ mongoose
     //(Product-Stats inserted)
     //return ProductStat.insertMany(dataProductStat)
     // (Transactions inserted)
-    // return Transaction.insertMany(dataTransaction)
+     //return Transaction.insertMany(dataTransaction)
    
   })
   .catch((err) => console.error(`Error while connecting to MongoDB: ${err}`));
