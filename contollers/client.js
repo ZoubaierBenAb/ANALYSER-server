@@ -69,7 +69,7 @@ export const getTransactions = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
-export const getGeography = async () => {
+export const getGeography = async (req,res) => {
   try {
     const users = await User.find();
 
