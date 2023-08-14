@@ -9,11 +9,12 @@ import generalRoutes from './routes/general.js';
 import managementRoutes from './routes/management.js';
 import salesRoutes from './routes/sales.js';
 import User from './models/User.js';
-import {dataUser,dataProduct,dataProductStat,dataTransaction,dataOverallStat} from './data/index.js'
+import {dataUser,dataProduct,dataProductStat,dataTransaction,dataOverallStat,dataAffiliateStat} from './data/index.js'
 import ProductStat from './models/ProductStat.js';
 import Product from './models/Product.js';
 import Transaction from './models/Transaction.js';
 import OverAllStat from './models/OverallStat.js';
+import AffiliateStat from './models/AffiliateStats.js';
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -46,6 +47,8 @@ mongoose
      //return Transaction.insertMany(dataTransaction)
      //(OverAllStats inserted)
     //  return OverAllStat.insertMany(dataOverallStat)
+    // (AffiliateStats inserted)
+   // return AffiliateStat.insertMany(dataAffiliateStat)
    
   })
   .catch((err) => console.error(`Error while connecting to MongoDB: ${err}`));

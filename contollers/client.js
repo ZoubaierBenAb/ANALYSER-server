@@ -42,7 +42,7 @@ export const getTransactions = async (req, res) => {
       const sortFormatted = {
         [sortParsed.field]: (sortParsed.sort = "asc" ? 1 : -1),
       };
-
+console.log(sortParsed.field)
       return sortFormatted;
     };
     const sortFormatted = Boolean(sort) ? generateSort() : {};
@@ -75,17 +75,21 @@ export const getGeography = async (req,res) => {
 
     const mappedLocations = users.reduce((acc, { country }) => {
       const countryto3 = getCountryIso3(country);
+      
       if (!acc[countryto3]) {
         acc[countryto3] = 0;
       }
       acc[countryto3]++;
+    
       return acc;
-    }, {});
+     
+    }, {}); 
+   
     const formattedLocations = Object.entries(mappedLocations).map(
-      ([country, count]) => {
-        return { id: country, value: count };
+      ([key, value]) => {
+        return { id: key, value: value };
       }
-    );
+    ); // create an array of objects 
     res.status(200).json(formattedLocations)
   } catch (error) {
     res.status(404).json({ message: error.message });

@@ -1,7 +1,8 @@
 import express from 'express';
-import { getUser } from '../contollers/general.js';
+import { getUser,getDashboardStats } from '../contollers/general.js';
 const router = express.Router();
 
 router.get('/user/:id', getUser);
+router.get('/dashboard',getDashboardStats)
 
 export default router;

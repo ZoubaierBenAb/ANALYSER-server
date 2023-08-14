@@ -1,15 +1,58 @@
-import User from '../models/User.js'
+import User from "../models/User.js";
+import OverallStat from "../models/OverallStat.js";
+import Transaction from "../models/Transaction.js";
+export const getUser = async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    const user = await User.findById(id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ message: "User not found" });
+  }
+};
+export const getDashboardStats = async (req, res) => {
+  try {
+    // hardcoded value due to data limitation
+    const currentYear = 2021;
+    const currentMonth = "November";
+    const currentDay = "2021-11-15";
 
+    // recent transactions
+    const transactions = await Transaction.find()
+      .limit(50)
+      .sort({ createdOn: -1 });
 
-export const getUser = async(req,res)=>{
-try {
-  const {id} = req.params
+    //OverAll stats
+    const overallStats = await OverallStat.find({ year: currentYear });
 
-    const user =await User.findById(id)
-    res.status(200).json(user)
+    const {
+      totalCustomers,
+      yearlySalesTotal,
+      yearlyTotalSoldUnits,
+      monthlyData,
+      salesByCategory,
+    } = overallStats[0];
+    const thisMonthStats = overallStats[0].monthlyData.find(({ month }) => {
+      return month === currentMonth;
+    });
+    const todayStats = overallStats[0].dailyData.find(({ date }) => {
+      return date === currentDay;
+    });
 
-} catch (error) {
-    res.status(404).json({message : 'User not found'})
-}
-}
+    res
+      .status(200)
+      .json({
+        totalCustomers,
+        yearlySalesTotal,
+        yearlyTotalSoldUnits,
+        monthlyData,
+        salesByCategory,
+        transactions,
+        thisMonthStats,
+        todayStats,
+      });
+  } catch (error) {
+    res.status(404).json({message : error.message})
+  }
+};
